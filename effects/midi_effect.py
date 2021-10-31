@@ -2,7 +2,6 @@ import mido
 import pygame
 import pygame.midi
 import time
-import keyboard
 import threading
 
 print_all = False
@@ -51,9 +50,6 @@ class _MidiSong:
         try:
             last_time = time.time()
             for msg in mid.play():
-
-                if keyboard.is_pressed('n'):
-                    break
 
                 if msg.dict()['type'] == 'program_change':
                     player.set_instrument(
