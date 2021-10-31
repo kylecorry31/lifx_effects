@@ -53,5 +53,7 @@ class WavEffect:
         self.resolution = resolution
 
     def run(self, lights):
+        for light in lights:
+            light.off()
         song = _WavSong(self.file, lights, self.scale, self.resolution)
         song.play()
