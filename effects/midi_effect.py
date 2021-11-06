@@ -31,9 +31,11 @@ class _MidiSong:
         self.lights = lights
         self.scale = scale
 
-    def _play(self, light, velocity, scale):
-        light.on(min(255, velocity * 2 * scale))
-        light.off(velocity * 6)
+    def _play(self, lights, velocity, scale):
+        for light in lights:
+            light.on(min(255, velocity * 2 * scale))
+        for light in lights:
+            light.off(velocity * 6)
 
     def light_play(self, light, note, scale):
         if note.velocity <= 0:
@@ -85,16 +87,22 @@ class _MidiSong:
 
 class MidiEffect:
 
-    def __init__(self, file, instruments, scale):
+    def __init__(self, file, instruments, scale, loop = False):
         self.file = file
         self.scale = scale
         self.instruments = instruments
+        self.loop = False
 
     def run(self, lights):
-        for light in lights:
-            light.off()
-        mapping = {}
-        for i in range(len(lights)):
-            mapping[self.instruments[i]] = lights[i]
-        song = _MidiSong(self.file, mapping, self.scale)
-        song.play()
+        first = True
+        while first or self.loop:
+            first = False
+            for light in lights:
+                light.off()
+            mapping = {}
+            for i in range(len(self.instruments)):
+                if self.instruments[i] not in mapping:
+                    mapping[self.instruments[i]] = []
+                mapping[self.instruments[i]].append(lights[i])
+            song = _MidiSong(self.file, mapping, self.scale)
+            song.play()

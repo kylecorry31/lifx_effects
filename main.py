@@ -10,9 +10,9 @@ lights = get_lights(2)
 try:
     # PhasmaHuntEffect(250).run(lights)
     # CandleEffect(250, 45).run(lights)
-    KeyboardEffect(['a', 'd'], 200).run(lights)
+    # KeyboardEffect(['a', 'd'], 200).run(lights)
     # MidiEffect('music/2.mid', [0, 0], 2).run(lights)
-    # MidiEffect('music/4.mid', [2, 6], 2).run(lights)
+    MidiEffect('music/6.mid', [4, 9], 1, True).run(lights)
     # WavEffect("music/4.wav", 2, 0.01).run(lights)
 except:
     for light in lights:
